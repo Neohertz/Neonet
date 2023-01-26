@@ -45,7 +45,7 @@ function Network:Fetch(Name: string)
 end
 
 --[=[
-    Create a new Bindable Event to use Internally
+    Create a new Bindable Event to use on the current host. (Client or Server)
 ]=]
 function Network.CreateBind(BindName: string)
     assert(EventObjects[BindName] == nil, `[Network] Bind '{BindName}' already exists.`)
@@ -54,6 +54,9 @@ function Network.CreateBind(BindName: string)
     return EventObjects[BindName] :: Event.BindInterface
 end
 
+--[=[
+    Create a new Event to be used for cross server communication.
+]=]
 function Network.CreateEvent(EventName: string)
     assert(RunService:IsServer(), `[Network] [{EventName}] Attempted to create a new event from the client.`)
     assert(EventObjects[EventName] == nil, `[Network] Event '{EventName}' already exists.`)
