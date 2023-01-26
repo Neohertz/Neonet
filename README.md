@@ -4,6 +4,11 @@ A simplified networking solution for roblox game development.
 The name is not final.
 
 ---
+## Installation
+1. Install with [Wally](https://wally.run/package/neohertz/neonet)
+2. Clone the Repo.
+
+---
 ## Usage
 
 > Server Script 1

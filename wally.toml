@@ -1,6 +1,8 @@
 [package]
-name = "neohertz0/neonet"
-version = "0.1.0"
+name = "neohertz/neonet"
+description = "A simplified networking system for roblox game development."
+version = "0.1.3"
+license = "MIT"
 registry = "https://github.com/UpliftGames/wally-index"
 realm = "shared"
 
