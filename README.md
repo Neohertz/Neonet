@@ -1,6 +1,8 @@
 ## Neonet
 A simplified networking solution for roblox game development.
 
+The name is not final.
+
 ---
 ## Usage
 
