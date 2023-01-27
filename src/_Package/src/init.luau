@@ -1,20 +1,14 @@
 --!strict
 
 local Network = {}
-Network.__index = Network
 
 local RunService = game:GetService("RunService")
 
 
-local Event = require(script.Event)
+local Node = require(script.Node)
 
---> Types
-
-
---> Variables & Constants
 local BIN
 local EventObjects = {}
-
 
 if RunService:IsServer() then
     BIN = Instance.new("Folder")
@@ -24,45 +18,43 @@ else
     BIN = game.ReplicatedStorage:WaitForChild("_Network")
 end
 
+--[=[
+    Flag for firing all clients. 
+
+    Usage: Node:Tell(Neonet.AllClients, "Hello, Client!")
+
+    @readonly
+]=]
 Network.AllClients = "AllClients"
 
 --[=[
-    Fetch a remote or bind the network. If one already exists, it will return said remote. If it doesn't it will try to instantiate one.
+    Fetch a node the network. If one already exists, it will return said remote. If it doesn't it will try to instantiate one.
+
+    @yeilds Up to 5 Seconds
+    @returns Node
 ]=]
-function Network:Fetch(Name: string)
+function Network:Fetch(Name: string) 
     local Search = BIN:WaitForChild(Name, 5)
-    assert(Search ~= nil, `[Network} :Fetch() Could not find remote '{Name}'. Did you create it?`)
+
+    assert(Search ~= nil, `[Network} :Fetch() Could not find remote '{Name}'. Use Neonet.CreateNode({Name}) to create it.`)
 
     if EventObjects[Name] == nil then
-        if Search:FindFirstChild("Event") then
-            EventObjects[Name] = Event.new(BIN, Name, "Bind")
-        else
-            EventObjects[Name] = Event.new(BIN, Name, "Remote")
-        end
+        EventObjects[Name] = Node.new(BIN, Name)
     end
 
-    return EventObjects[Name] :: Event.EventInterface
+    return EventObjects[Name] :: Node.Interface
 end
 
 --[=[
-    Create a new Bindable Event to use on the current host. (Client or Server)
+    Create a new node and return it.
+
+    @param Name Node Name
+    @returns Node
 ]=]
-function Network.CreateBind(BindName: string)
-    assert(EventObjects[BindName] == nil, `[Network] Bind '{BindName}' already exists.`)
-
-    EventObjects[BindName] = Event.new(BIN, BindName, "Bind")
-    return EventObjects[BindName] :: Event.BindInterface
-end
-
---[=[
-    Create a new Event to be used for cross server communication.
-]=]
-function Network.CreateEvent(EventName: string)
-    assert(RunService:IsServer(), `[Network] [{EventName}] Attempted to create a new event from the client.`)
-    assert(EventObjects[EventName] == nil, `[Network] Event '{EventName}' already exists.`)
-
-    EventObjects[EventName] = Event.new(BIN, EventName, "Remote")
-    return EventObjects[EventName] :: Event.EventInterface
+function Network.CreateNode(Name: string) 
+    assert(EventObjects[Name] == nil, `[Network] Node '{Name}' already exists. Use Neonet:Fetch({Name}) to grab it.`)
+    EventObjects[Name] = Node.new(BIN, Name)
+    return EventObjects[Name] :: Node.Interface
 end
 
 return Network

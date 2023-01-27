@@ -5,7 +5,7 @@
 
     "ReplicatedStorage": {
       "neonet": {
-        "$path": "src/_Package/src"
+        "$path": "src/src"
       }
     },
 
