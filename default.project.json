@@ -1,6 +1,22 @@
 {
-    "name": "neonet",
-    "tree": {
-      "$path": "src"
+  "name": "Neonet",
+  "tree": {
+    "$className": "DataModel",
+
+    "ReplicatedStorage": {
+      "neonet": {
+        "$path": "src/_Package/src"
+      }
+    },
+
+    "ServerScriptService": {
+      "$path": "src/Server"
+    },
+
+    "StarterPlayer": {
+      "StarterPlayerScripts": {
+        "$path": "src/Client"
+      }
     }
   }
+}
