@@ -3,13 +3,12 @@
 ]=]
 
 local Network = require(game.ReplicatedStorage.neonet)
+Network('lint')
 
-local Message = Network:Fetch("Message")
+local NumberOfCoins = Network:Fetch("NumberOfCoins")
+local Duplicate = Network.CreateNode("Duplicate")
 
-
--- Give server a message from the client.
-Message:Tell("I am from the client!")
-
--- Print the last message recieved
-print(`Last Message: {Message:Ask()}`)
+NumberOfCoins:OnAsked(function()
+    return 1
+end)
 

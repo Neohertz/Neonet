@@ -7,26 +7,13 @@
 ]=]
 
 local Network = require(game.ReplicatedStorage.neonet)
-local Message = Network.CreateNode("Message")
+Network("lint")
 
-local LastMsg = nil
+local NumberOfCoins = Network.CreateNode("NumberOfCoins")
+local Duplicate = Network.CreateNode("Duplicate")
 
--- Print the message to console
-Message:OnTold(function(Player, Msg)
-    LastMsg = Msg
-
-    if Player then
-        print (`{Player.Name} Says: {Msg}`)
-    else
-        print (`Server Says: {Msg}`)
-    end
+game.Players.PlayerAdded:Connect(function(Player)
+    print(NumberOfCoins:Ask(Player))
 end)
 
--- Return the last recieved message
-Message:OnAsked(function()
-    return LastMsg
-end)
-
--- Give server a message from the server.
-Message:Tell("I am from the server!")
 
