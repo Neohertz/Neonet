@@ -1,10 +1,3 @@
---!strict
-
--- Another server script can ask and will recieve the state.
-
---[=[
-    SERVER
-]=]
 
 local Network = require(game.ReplicatedStorage.neonet)
 Network("lint")

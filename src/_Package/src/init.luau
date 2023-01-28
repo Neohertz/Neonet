@@ -14,7 +14,7 @@ local Network = {}
 setmetatable(Network, {
     __call = function(_, Flag)
         if Flag:lower() == "lint" then
-            warn(`[Network] {RunService:IsClient() and "Client" or "Server"} Linting Enabled.`)
+            print(`[Network] {RunService:IsClient() and "Client" or "Server"} Linting Enabled.`)
             Flags.Lint = true
         else
             warn(`[Network] Invalid Flag '{Flag}'`)
@@ -35,21 +35,20 @@ local EventObjects: {[string]: Node.PublicInterface} = {}
 if RunService:IsServer() then
     BIN = Instance.new("Folder")
     BIN.Parent = game.ReplicatedStorage
-    BIN.Name = "_Network"
+    BIN.Name = "__NEONET"
 else
-    BIN = game.ReplicatedStorage:WaitForChild("_Network")
+    BIN = game.ReplicatedStorage:WaitForChild("__NEONET")
 end
 
 --FIX: Consider moving this to Node to contain linting.
-local GlobalDoesModuleExist = Node.new(BIN, "__NEONET")
+local GlobalDoesModuleExist = Node.new(BIN, "__BRIDGE")
 
 GlobalDoesModuleExist:OnAsked(function(_, Data)
     return EventObjects[Data] ~= nil
 end)
 
 --[=[
-    Flag for firing all clients. 
-
+    Flag for firing all clients.
     Usage: Node:Tell(Neonet.AllClients, "Hello, Client!")
 
     @readonly
@@ -90,7 +89,7 @@ function Network.CreateNode(Name: string)
         end
 
         if Find then
-            warn(`[Neonet-Lint] [duplicate_node] {RunService:IsServer() and "SERVER" or "CLIENT"} found duplicate node '{Name}' found on {RunService:IsClient() and "SERVER" or "CLIENT"}. Consider calling Neonet:Fetch({Name}) or renaming it.`)
+            warn(`[Neonet-Lint] (duplicate_node) {RunService:IsServer() and "SERVER" or "CLIENT"} found duplicate node '{Name}' found on {RunService:IsClient() and "SERVER" or "CLIENT"}. Consider calling Neonet:Fetch({Name}) or renaming it.`)
         end
     end
     
