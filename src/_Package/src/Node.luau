@@ -149,7 +149,7 @@ function Node:Ask(...: any) : any
     -- If we are trying to invoke the client, do it in a pcall to prevent network issues.
     if PlayerCheck ~= nil then    
         if Flags.Lint then
-            _warn(`[Neonet-Lint] [invoked-client] Invoking the client with {self.Name}:Ask({tostring(PlayerCheck)}) is inherently dangerous. Ensure that you aren't trusting the client with any information.`)
+            _warn(`[Neonet-Lint] (invoked_client) Invoking the client with {self.Name}:Ask({tostring(PlayerCheck)}) is inherently dangerous. Ensure that you aren't trusting the client with any information.`)
         end
         
         local Success, Result = pcall(function()
