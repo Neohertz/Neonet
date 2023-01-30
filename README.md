@@ -1,6 +1,6 @@
 
 
-# Neonet v1.0.7
+# Neonet v1.0.9
 A simplified networking solution for roblox game development that provides a more human readable syntax. 
 
 Created as personal resource, but feel free to use it if you'd like.
@@ -84,10 +84,11 @@ local MyNode = Network.CreateNode("MyNode")
 local MyNode = Network:Fetch("MyNode")
 ```
 ### 4. `Remote and Bindable Events:` **:Tell()** and **:OnTold()**
-> Send a message to a node and all of it's listeners.
+> Send a message to a node and all of it's listeners. 
 >
 > - Quirks
 >   - If :Tell() is called from the node's host (see example), the first argument of the OnTold() callback (Player) will be nil.
+>   - If you need to fire all clients, pass `Network.AllClients` as the first argument of `:Tell()`
 >
 > Usage:
 ```lua

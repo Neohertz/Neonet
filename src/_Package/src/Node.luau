@@ -1,5 +1,3 @@
-
-
 --[=[
     @class Node Class
 ]=]
@@ -56,6 +54,7 @@ local function warn(Message: string)
    _warn(`[Neonet] ({RunService:IsClient() and "Client" or "Server"}) {Message}`) 
 end
 
+
 --[=[
     Helper Functions
 ]=]
@@ -80,7 +79,7 @@ end
 --[=[
     Listen for questions from the current host and across the boundary.
 
-    Anything returned by said callback will be sent back the the script that asked.
+    Anything returned by said  seae callback will be sent back the the script that asked.
 
     @param Callback (...any) -> any
     @returns nil
@@ -182,7 +181,8 @@ function Node:Tell(...)
 
     local Bind = self.Container:FindFirstChild("Event") :: BindableEvent
     local RemoteEvent = self.Container:FindFirstChild("RemoteEvent") :: RemoteEvent
-    local PlayerCheck = game.Players:FindFirstChild(tostring(table.pack(...)[1]))
+    
+    local PlayerCheck = game.Players:FindFirstChild(tostring(table.pack(...)[1])) or (table.pack(...)[1] == "AllClients" and "AllClients" or nil)
 
     -- Ensure that we arent attempting to fire to player from the client.
     if PlayerCheck ~= nil then
@@ -285,7 +285,6 @@ end
     @private
 ]=]
 function Node:Kill()
-
     for _, Connection in ipairs(self.Connections) do
         Connection:Disconnect()
     end
@@ -298,6 +297,5 @@ function Node:Kill()
 
     return
 end
-
 
 return Node
